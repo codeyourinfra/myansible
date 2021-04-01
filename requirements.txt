@@ -4,3 +4,4 @@ boto
 boto3
 lxml
 pexpect
+ssh-keygen
