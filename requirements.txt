@@ -1,5 +1,4 @@
 ansible
-azure
 boto
 boto3
 lxml
