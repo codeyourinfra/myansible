@@ -1,7 +1,12 @@
-FROM python:3.9.2-alpine3.13
+FROM python:3.10.1-alpine3.15
+LABEL maintainer "Gustavo Muniz do Carmo <gustavo@esign.com.br>"
 
-COPY requirements.txt .
-RUN apk --no-cache add cargo curl gcc git libffi-dev libxml2-dev libxslt-dev make musl-dev openssh openssh-keygen openssl-dev \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py -s \
-    && python get-pip.py && rm get-pip.py \
-    && pip install --no-cache-dir -r requirements.txt -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
+RUN apk add --no-cache cargo curl gcc git libffi-dev libxml2-dev libxslt-dev musl-dev openssl-dev rust tar \
+    && adduser -D ansible
+
+USER ansible
+WORKDIR /home/ansible
+ENV PATH=/home/ansible/.local/bin:$PATH
+
+COPY --chown=ansible requirements.txt .
+RUN pip install --disable-pip-version-check --no-cache-dir --user ansible -r requirements.txt -r https://raw.githubusercontent.com/ansible-collections/azure/v1.13.0/requirements-azure.txt
