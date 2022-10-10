@@ -1,4 +1,4 @@
-FROM python:3.10.1-alpine3.15
+FROM python:3.10.7-alpine3.16
 LABEL maintainer "Gustavo Muniz do Carmo <gustavo@esign.com.br>"
 
 RUN apk add --no-cache cargo curl gcc git libffi-dev libxml2-dev libxslt-dev musl-dev openssl-dev rust tar \
